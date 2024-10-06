@@ -43,5 +43,5 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
         with:
           # 部署文档
-          branch: blog-pages
+          branch: blog_pages
           folder: src/.vuepress/dist
