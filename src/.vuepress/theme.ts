@@ -90,7 +90,7 @@ export default hopeTheme({
 
   // 加密配置
   encrypt: {
-    global: true，    
+    global: true,
     config: {
       "/posts/apple/": ["9999"],
       "/demo/encrypt.html": ["1234"],
