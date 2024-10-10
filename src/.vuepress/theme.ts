@@ -90,8 +90,7 @@ export default hopeTheme({
 
   // 加密配置
   encrypt: {
-    global: true,
-    admin: ["cgtx7994", "123456", "1111"],
+    global: true，    
     config: {
       "/posts/apple/": ["9999"],
       "/demo/encrypt.html": ["1234"],
