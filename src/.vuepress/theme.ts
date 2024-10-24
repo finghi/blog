@@ -18,11 +18,8 @@ export default hopeTheme({
   },
 
   iconAssets: "fontawesome-with-brands",
-  //  "fontawesome",
 
-  logo: "https://theme-hope-assets.vuejs.press/logo.svg",
-
-  repo: "vuepress-theme-hope/vuepress-theme-hope",
+  logo: "https://pinia.vuejs.org/logo.svg",
 
   docsDir: "src",
 
@@ -81,8 +78,8 @@ export default hopeTheme({
       Youtube: "https://example.com",
       Zhihu: "https://example.com",
       VuePressThemeHope: {
-        icon: "https://theme-hope-assets.vuejs.press/logo.svg",
-        link: "https://theme-hope.vuejs.press",
+        icon: "https://pinia.vuejs.org/logo.svg",
+        link: "https://www.baodu.com",
       },
     },
   },
@@ -112,7 +109,6 @@ export default hopeTheme({
     // blog: true,
     blog: {
       filter(page) {
-        console.log("97------", page.path);
         let path: string = page.path;
         return !pagelist.some((item) => path.startsWith(item));
       },
