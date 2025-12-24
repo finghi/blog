@@ -6,7 +6,7 @@ cover: /assets/images/cover1.jpg
 # 这是页面的图标
 icon: file
 # 这是侧边栏的顺序
-order: 3
+order: 2
 # 设置作者
 author: Ms.Hope
 # 设置写作时间
@@ -26,7 +26,6 @@ star: true
 footer: 这是测试显示的页脚
 # 你可以自定义版权信息
 copyright: 无版权
-article: false
 ---
 
 `more` 注释之前的内容被视为文章摘要。
@@ -36,9 +35,7 @@ article: false
 ## 页面标题
 
 The first H1 title in Markdown will be regarded as page title.
-
 Markdown 中的第一个 H1 标题会被视为页面标题。
-
 你可以在 Markdown 的 Frontmatter 中设置页面标题。
 
 ```md
@@ -51,10 +48,12 @@ title: 页面标题
 
 你可以在 Markdown 的 Frontmatter 中设置页面信息。
 
+<!--
 - 作者设置为 Ms.Hope。
 - 写作日期为 2020 年 1 月 1 日
 - 分类为 “使用指南”
 - 标签为 “页面配置” 和 “使用指南”
+-->
 
 ## 页面内容
 
@@ -71,13 +70,11 @@ title: 页面标题
 
 每个 Markdown 页面都会被转换为一个 Vue 组件，这意味着你可以在 Markdown 中使用 Vue 语法：
 
-{{ 1 + 1 }}
-
 <!-- markdownlint-disable MD033 -->
-
+<!--
 <ul>
   <li v-for="i in 3">{{ i }}</li>
-</ul>
+</ul> -->
 
 <!-- markdownlint-enable MD033 -->
 
@@ -115,7 +112,7 @@ const MyComponent = defineComponent({
 
 - 文字结尾应该有深蓝色的 徽章文字 徽章。 <Badge text="徽章文字" color="#242378" />
 
-- 一个卡片:
+<!-- - 一个卡片:
 
   ```component VPCard
   title: Mr.Hope
@@ -123,4 +120,4 @@ const MyComponent = defineComponent({
   logo: https://mister-hope.com/logo.svg
   link: https://mister-hope.com
   background: rgba(253, 230, 138, 0.15)
-  ```
+  ``` -->

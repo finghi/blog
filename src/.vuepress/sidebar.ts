@@ -9,37 +9,27 @@ export default sidebar({
       prefix: "posts/",
       children: "structure",
       collapsible: true,
-    },   
+    },
     {
       text: "博客",
-      icon: "fa-solid fa-chart-simple ",
+      icon: "hippo",
       prefix: "blog/",
-      collapsible: true,      
-      children: [ {
-        text: "Golang",
-        icon: "book",
-        prefix: "golang/",
-        children: "structure",
-        collapsible: true,      
-      }, 
-      "dads","my"
-    ],      
+      collapsible: true,
+      children: "structure",
     },
-   
     "intro",
-    
+    {
+      text: "如何使用",
+      icon: "poo",
+      prefix: "demo/",
+      link: "demo/",
+      collapsible: true,
+      children: "structure",
+    },
     // {
     //   text: "幻灯片",
     //   icon: "person-chalkboard",
-    //   link: "https://plugin-md-enhance.vuejs.press/zh/guide/content/revealjs/demo.html",
-    // },
-    // {
-    //   text: "如何使用",
-    //   icon: "laptop-code",
-    //   prefix: "demo/",
-    //   link: "demo/",
-    //   children: "structure",
+    //   link: "https://ecosystem.vuejs.press/zh/plugins/markdown/revealjs/demo.html",
     // },
   ],
-  
 });

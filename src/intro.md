@@ -1,7 +1,8 @@
 ---
 icon: circle-info
-date: 2024-09-20
 cover: /assets/images/cover3.jpg
+sticky: 2000
+star: 2000
 ---
 
 # 介绍页
