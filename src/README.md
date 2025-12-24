@@ -39,7 +39,7 @@ tagline: 岳飞
 #     desc: 自定义详细介绍
 #     link: https://你的自定义链接
 
-footer: 自定义你的页脚文字
+footer: 一个前端开发者
 ---
 
 
