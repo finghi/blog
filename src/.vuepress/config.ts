@@ -1,25 +1,16 @@
-import { defineUserConfig } from 'vuepress'
+import { defineUserConfig } from "vuepress";
 
-import theme from './theme.js'
+import theme from "./theme.js";
 
 export default defineUserConfig({
-  base: '/blog/',
+  base: "/blog/",
 
-  lang: 'zh-CN',
-  title: '我的博客',
-  description: 'vuepress-theme-hope 的博客演示',
+  lang: "zh-CN",
+  title: "我的博客",
+  description: "基于vuepress-theme-hope 开发 的博客",
 
   theme,
-
-  extendsPageOptions: (extendable, app) => {
-    if (extendable.path === '/404.html') {
-      console.log(app)
-      console.log(extendable)
-
-      extendable.frontmatter.layout = 'NotFound'
-    }
-  },
-
+  
   // 和 PWA 一起启用
-  shouldPrefetch: false
-})
+  // shouldPrefetch: false,
+});
