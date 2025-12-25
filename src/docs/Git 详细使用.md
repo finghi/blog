@@ -45,6 +45,7 @@ git config --global alias.df diff
 ```
 
 > 💡 别名使用示例：
+>
 > - `git st` → `git status`
 > - `git lg` → `git log --oneline --graph --all --decorate`
 > - `git co main` → `git checkout main`
@@ -74,10 +75,11 @@ git clone https://github.com/username/repo-name.git my-project
 git clone git@github.com:username/repo-name.git
 ```
 
-> 💡 SSH密钥配置步骤：
-> 1. 生成SSH密钥：`ssh-keygen -t ed25519 -C "your.email@example.com"`
+> 💡 SSH 密钥配置步骤：
+>
+> 1. 生成 SSH 密钥：`ssh-keygen -t ed25519 -C "your.email@example.com"`
 > 2. 查看公钥：`cat ~/.ssh/id_ed25519.pub`
-> 3. 将公钥添加到GitHub/GitLab账号
+> 3. 将公钥添加到 GitHub/GitLab 账号
 > 4. 测试连接：`ssh -T git@github.com`
 
 ## 二、工作区与暂存区操作
@@ -164,12 +166,14 @@ git reset --hard <commit-id>  # 恢复到指定操作记录的版本
 ```
 
 > ⚠️ 版本回滚注意事项：
+>
 > 1. **--hard 参数慎用**：会彻底删除工作区和暂存区的修改，无法恢复
 > 2. **已推送到远程的提交**：不要使用 reset 回滚，应使用 revert 命令
 > 3. **多人协作分支**：回滚后强制推送会覆盖他人的提交，需谨慎操作
 > 4. **reflog 的重要性**：误操作后，reflog 是最后的救命稻草
 
 > 💡 版本回滚流程图：
+>
 > ```
 > ┌─────────────────┐     ┌─────────────────┐     ┌─────────────────┐
 > │   查看提交历史   │────▶│   选择回滚方式   │────▶│   执行回滚操作   │
@@ -196,12 +200,16 @@ git reflog show master
 # 查看更详细的记录（包含时间戳）
 git reflog --date=iso
 ```
+
 ##### 补充
+
 1. reflog 的有效期：默认情况下，Git 会在 90 天后清理 reflog 中 “不可达” 的记录（可以通过 git gc 手动清理），所以误操作后要尽快恢复
 2. 仅本地有效：reflog 是本地仓库的日志，不会同步到远程仓库，所以别人的仓库看不到你的 reflog
-##### 常用参数 
-   * `git reflog expire`：手动清理过期的 reflog 记录
-   * `git reflog delete`：删除指定的 reflog 条目（极少用)
+
+##### 常用参数
+
+- `git reflog expire`：手动清理过期的 reflog 记录
+- `git reflog delete`：删除指定的 reflog 条目（极少用)
 
 ## 三、分支管理
 
@@ -276,6 +284,7 @@ git merge feature/login
 > | 变基 | 历史线清晰，线性提交 | 修改历史，有风险 | 本地分支，未推送 |
 
 > 💡 分支合并流程图：
+>
 > ```
 > ┌─────────────────┐     ┌─────────────────┐     ┌─────────────────┐
 > │   切换到目标分支  │────▶│   拉取最新代码   │────▶│   合并源分支     │
@@ -480,8 +489,10 @@ git rebase --status
 4. 最佳实践：开发功能时可随意小提交，完成后用交互式变基整理为有意义的提交，再推送到远程。
 
 ### 3、Cherry-pick（挑选提交）
+
 ##### 将指定提交复制到当前分支（适用于跨分支复用单个提交）
-~~~bash
+
+```bash
 # 查看目标提交的 commit ID
 git log --oneline
 
@@ -497,8 +508,7 @@ git cherry-pick --abort
 
 # （可选）如果只是暂时退出，保留当前修改，执行：
 git cherry-pick --quit
-~~~
-
+```
 
 ### 4、忽略文件（.gitignore）
 
@@ -576,15 +586,17 @@ git commit -am "feat: 补充遗漏的修改"
 
 ### 4、本地环境重置
 
-当本地Git环境变得混乱（如大量未解决的冲突、错误的合并、误操作等）时，可以通过以下方法进行重置：
+当本地 Git 环境变得混乱（如大量未解决的冲突、错误的合并、误操作等）时，可以通过以下方法进行重置：
 
-#### 轻度重置：保留本地修改，仅重置暂存区和HEAD
+#### 轻度重置：保留本地修改，仅重置暂存区和 HEAD
+
 ```bash
 # 重置暂存区，保留工作区修改
 git reset HEAD .
 ```
 
 #### 中度重置：重置到远程最新状态，删除未提交的修改
+
 ```bash
 # 拉取远程最新代码（不自动合并）
 git fetch origin
@@ -593,6 +605,7 @@ git reset --hard origin/main
 ```
 
 #### 深度重置：清理未跟踪的文件和目录
+
 ```bash
 # 清理所有未跟踪的文件（-f强制，-d包括目录）
 git clean -df
@@ -601,16 +614,18 @@ git clean -dfx
 ```
 
 #### 完全重置：重新克隆仓库（最彻底的方法）
+
 ```bash
 # 退出当前仓库目录
 cd ..
 # 删除当前仓库目录
 rm -rf repo-name
 # 重新克隆仓库
- git clone https://github.com/username/repo-name.git
+git clone https://github.com/username/repo-name.git
 ```
 
 > ⚠️ 重置注意事项：
+>
 > 1. **--hard 参数慎用**：会彻底删除工作区和暂存区的修改，无法恢复
 > 2. **git clean 命令**：删除未跟踪的文件，无法恢复
 > 3. **重新克隆**：会丢失本地所有未推送到远程的修改和分支
@@ -618,9 +633,10 @@ rm -rf repo-name
 
 ### 5、敏感信息清理
 
-如果不小心将敏感信息（如密码、API密钥）提交到Git仓库，可以通过以下方法清理：
+如果不小心将敏感信息（如密码、API 密钥）提交到 Git 仓库，可以通过以下方法清理：
 
 #### 方法一：修改提交历史（仅本地未推送时使用）
+
 ```bash
 # 交互式变基，修改包含敏感信息的提交
 git rebase -i <commit-id>^  # ^表示该提交的上一个提交
@@ -632,6 +648,7 @@ git rebase --continue
 ```
 
 #### 方法二：使用 filter-branch（已推送到远程时使用）
+
 ```bash
 # 删除包含敏感信息的文件的所有历史记录
 git filter-branch --force --index-filter \
@@ -643,6 +660,7 @@ git push -f origin main
 ```
 
 #### 方法三：使用 BFG Repo-Cleaner（推荐，更高效）
+
 ```bash
 # 下载 BFG
 download bfg.jar
@@ -662,6 +680,7 @@ git push -f origin main
 ```
 
 > ⚠️ 敏感信息清理注意事项：
+>
 > 1. **已推送到远程的情况**：清理后需要通知所有协作者重新克隆仓库
 > 2. **备份仓库**：清理前建议先备份仓库
 > 3. **修改凭证**：即使清理了历史记录，仍建议立即修改泄露的敏感信息
@@ -671,5 +690,3 @@ git push -f origin main
 1. Git 核心流程：工作区 → 暂存区 → 版本库 → 远程仓库，核心命令围绕这三个区域展开；
 2. 分支管理是 Git 协作的核心，遵循 “功能分支开发、合并到主分支” 的规范；
 3. 遇到问题优先通过 `git status`/`git log` 排查，冲突需手动解决，版本回滚慎用 `--hard` 参数。
-
-
