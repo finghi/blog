@@ -32,7 +32,7 @@ export default hopeTheme({
   blog: {
     description: "一个前端开发者",
     intro: "/intro.html",
-    // medias: {
+    medias: {
     //   Baidu: "https://example.com",
     //   BiliBili: "https://example.com",
     //   Bitbucket: "https://example.com",
@@ -64,11 +64,11 @@ export default hopeTheme({
     //   Whatsapp: "https://example.com",
     //   Youtube: "https://example.com",
     //   Zhihu: "https://example.com",
-    //   VuePressThemeHope: {
-    //     icon: "https://theme-hope-assets.vuejs.press/logo.svg",
-    //     link: "https://theme-hope.vuejs.press",
-    //   },
-    // },
+      VuePressThemeHope: {
+        icon: "https://theme-hope-assets.vuejs.press/logo.svg",
+        link: "https://theme-hope.vuejs.press",
+      },
+    },
   },
 
   // 加密配置
@@ -160,7 +160,7 @@ export default hopeTheme({
     // 在启用之前安装 sandpack-vue3
     // sandpack: true,
   },
-  editLink:false,
+  editLink: false,
 
   // 在这里配置主题提供的插件
   plugins: {
