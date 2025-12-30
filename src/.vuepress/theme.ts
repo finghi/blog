@@ -176,8 +176,8 @@ export default hopeTheme({
       provider: "Giscus",
       repo: "finghi/blog-giscus", // 替换为你的 GitHub 仓库
       repoId: "R_kgDOMzaG-w", // 替换为你的仓库 ID
-      category: "Q&A", // 讨论分类
-      categoryId: "DIC_kwDOMzaG-84CiofV", // 替换为你的分类 ID
+      category: "Announcements", // 讨论分类
+      categoryId: "DIC_kwDOMzaG-84CiofT", // 替换为你的分类 ID
       mapping: "pathname", // 页面与讨论的映射方式
       strict: true, // 严格匹配映射
       reactionsEnabled: true, // 启用反应表情
