@@ -171,13 +171,18 @@ export default hopeTheme({
       },
     },
 
-    // 启用之前需安装 @waline/client
-    // 警告: 这是一个仅供演示的测试服务，在生产环境中请自行部署并使用自己的服务！
-    // comment: {
-    //   provider: "Waline",
-    //   serverURL: "https://waline-comment.vuejs.press",
-    // },
-
+    // 启用 Giscus 评论系统
+    comment: {
+      provider: "Giscus",
+      repo: "finghi/blog-giscus", // 替换为你的 GitHub 仓库
+      repoId: "R_kgDOMzaG-w", // 替换为你的仓库 ID
+      category: "Q&A", // 讨论分类
+      categoryId: "DIC_kwDOMzaG-84CiofV", // 替换为你的分类 ID
+      mapping: "pathname", // 页面与讨论的映射方式
+      strict: true, // 严格匹配映射
+      reactionsEnabled: true, // 启用反应表情
+      inputPosition: "bottom", // 输入框位置
+    },      
     components: {
       components: ["Badge", "VPCard"],
     },
