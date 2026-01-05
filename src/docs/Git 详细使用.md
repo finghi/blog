@@ -72,7 +72,10 @@ git clone https://github.com/username/repo-name.git
 git clone https://github.com/username/repo-name.git my-project
 
 # SSH 方式（需配置 SSH 密钥）
-git clone git@github.com:username/repo-name.git
+git clone git@github.com:username/repo-name.git 
+
+# 克隆远程仓库 指定 分支 到本地
+git clone -b blog_pages --single-branch https://github.com/username/repo-name.git
 ```
 
 > 💡 SSH 密钥配置步骤：

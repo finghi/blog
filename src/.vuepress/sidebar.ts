@@ -9,7 +9,7 @@ export default sidebar({
       prefix: "docs/",
       children: "structure",
       collapsible: true,
-      navbarTitle: "文档",
+      
     },
     {
       text: "博客",
@@ -17,7 +17,6 @@ export default sidebar({
       prefix: "posts/",
       collapsible: true,
       children: "structure",
-      navbarTitle: "博客",
     },
     "intro",
     // {
