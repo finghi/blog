@@ -27,6 +27,7 @@ export default hopeTheme({
   // 页脚
   footer: "默认页脚",
   displayFooter: true,
+  
 
   // 博客相关
   blog: {
@@ -122,6 +123,7 @@ export default hopeTheme({
     tabs: true,
     tasklist: true,
     vPre: true,
+    
 
     // 取消注释它们如果你需要 TeX 支持
     // math: {
@@ -164,6 +166,7 @@ export default hopeTheme({
 
   // 在这里配置主题提供的插件
   plugins: {
+    
     blog: {
       filter(page) {
         let path: string = page.path;
@@ -181,6 +184,6 @@ export default hopeTheme({
       strict: true, // 严格匹配映射
       reactionsEnabled: true, // 启用反应表情
       inputPosition: "bottom", // 输入框位置
-    },
+    },    
   },
 });
