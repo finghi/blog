@@ -75,6 +75,18 @@ clear
  echo -e "Line 1\nLine 2"
 ```
 
+### alias - 设置命令别名
+```bash
+# 设置临时别名（仅当前会话有效）
+alias ll='ls -la'
+
+# 查看所有别名
+alias     
+
+# 取消别名
+unalias ll
+```
+
 ### history - 查看命令历史
 ```bash
 # 查看最近执行的命令历史
@@ -93,16 +105,13 @@ history 10
 !command
 ```
 
-### alias - 设置命令别名
+### which - 查找命令的路径
 ```bash
-# 设置临时别名（仅当前会话有效）
-alias ll='ls -la'
+# 查找命令的绝对路径
+which ls
 
-# 查看所有别名
-alias     
-
-# 取消别名
-unalias ll
+# 查找所有匹配的命令路径
+which -a ls
 ```
 
 ### exit - 退出当前shell
@@ -114,13 +123,85 @@ exit
 exit 0
 ```
 
-### which - 查找命令的路径
+### sudo - 以管理员身份执行命令
 ```bash
-# 查找命令的绝对路径
-which ls
+# 以管理员身份执行命令
+sudo command
 
-# 查找所有匹配的命令路径
-which -a ls
+# 以管理员身份执行命令并保持环境变量
+sudo -E command
+
+# 以指定用户身份执行命令
+sudo -u username command
+
+# 切换到管理员身份
+sudo su
+
+# 查看sudo权限
+sudo -l
+```
+
+### su - 切换用户
+```bash
+# 切换到root用户
+su
+
+# 切换到指定用户
+su username
+
+# 切换到指定用户并加载其环境变量
+su - username
+```
+
+### passwd - 修改密码
+```bash
+# 修改当前用户密码
+passwd
+
+# 修改指定用户密码（需要管理员权限）
+passwd username
+
+# 锁定用户账户（需要管理员权限）
+passwd -l username
+
+# 解锁用户账户（需要管理员权限）
+passwd -u username
+```
+
+### chmod - 修改文件权限
+```bash
+# 给文件所有者添加执行权限
+chmod +x filename.txt
+
+# 给文件所有者、组和其他用户添加读权限
+chmod +r filename.txt
+
+# 给文件所有者添加读、写和执行权限，给组和其他用户添加读和执行权限
+chmod 755 filename.txt
+
+# 递归修改目录及其子目录和文件的权限
+chmod -R 755 directory/
+```
+
+### chown - 修改文件所有者
+```bash
+# 修改文件所有者（需要管理员权限）
+chown username filename.txt
+
+# 修改文件所有者和所属组（需要管理员权限）
+chown username:groupname filename.txt
+
+# 递归修改目录及其子目录和文件的所有者（需要管理员权限）
+chown -R username:groupname directory/
+```
+
+### chgrp - 修改文件所属组
+```bash
+# 修改文件所属组（需要管理员权限）
+chgrp groupname filename.txt
+
+# 递归修改目录及其子目录和文件的所属组（需要管理员权限）
+chgrp -R groupname directory/
 ```
 
 ## 文件操作
@@ -206,6 +287,24 @@ rm -f filename.txt
 rm -rf directory/
 ```
 
+### ln - 创建链接
+```bash
+# 创建硬链接
+ln source_file link_name
+
+# 创建符号链接
+ln -s source_file link_name
+
+# 创建目录的符号链接
+ln -s source_directory link_name
+```
+
+### stat - 查看文件或文件系统状态
+```bash
+# 查看文件状态信息
+stat filename.txt
+```
+
 ### find - 查找文件或目录
 ```bash
 # 在当前目录及其子目录中查找文件
@@ -222,24 +321,6 @@ find . -name "*.tmp" -delete
 
 # 查找指定大小的文件（+100M表示大于100MB，-10M表示小于10MB）
 find . -type f -size +100M
-```
-
-### less - 分页查看文件内容
-```bash
-# 分页查看文件内容
-less filename.txt
-
-# 显示行号并分页查看
-less -N filename.txt
-
-# 搜索文本（输入/后跟随搜索词）
-less filename.txt
-```
-
-### more - 分页查看文件内容
-```bash
-# 分页查看文件内容
-more filename.txt
 ```
 
 ### head - 查看文件开头内容
@@ -263,22 +344,64 @@ tail -n 20 filename.txt
 tail -f logfile.txt
 ```
 
-### stat - 查看文件或文件系统状态
+### more - 分页查看文件内容
 ```bash
-# 查看文件状态信息
-stat filename.txt
+# 分页查看文件内容
+more filename.txt
 ```
 
-### ln - 创建链接
+### less - 分页查看文件内容
 ```bash
-# 创建硬链接
-ln source_file link_name
+# 分页查看文件内容
+less filename.txt
 
-# 创建符号链接
-ln -s source_file link_name
+# 显示行号并分页查看
+less -N filename.txt
 
-# 创建目录的符号链接
-ln -s source_directory link_name
+# 搜索文本（输入/后跟随搜索词）
+less filename.txt
+```
+
+### file - 查看文件类型
+```bash
+# 查看文件类型
+file filename.txt
+
+# 查看文件类型（不显示文件名）
+file -b filename.txt
+
+# 递归查看目录下所有文件的类型
+file directory/*
+```
+
+### md5sum - 计算文件MD5哈希值
+```bash
+# 计算文件MD5哈希值
+md5sum filename.txt
+
+# 计算多个文件的MD5哈希值
+md5sum file1.txt file2.txt
+
+# 计算文件MD5哈希值并保存到文件
+md5sum filename.txt > filename.md5
+
+# 验证文件MD5哈希值
+md5sum -c filename.md5
+```
+
+### sha256sum - 计算文件SHA256哈希值
+```bash
+# 计算文件SHA256哈希值
+sha256sum filename.txt
+
+# 计算多个文件的SHA256哈希值
+sha256sum file1.txt file2.txt
+
+# 计算文件SHA256哈希值并保存到文件
+sha256sum filename.txt > filename.sha256
+
+# 验证文件SHA256哈希值
+sha256sum -c filename.sha256
 ```
 
 ## 目录操作
@@ -307,6 +430,21 @@ rmdir dir1 dir2 dir3
 rmdir -p /path/to/empty/directories
 ```
 
+### tree - 显示目录结构
+```bash
+# 以树状结构显示目录内容
+tree
+
+# 显示目录结构并包含隐藏文件
+tree -a
+
+# 显示目录结构并显示文件大小
+tree -h
+
+# 只显示指定深度的目录结构
+tree -L 2
+```
+
 ### du - 查看目录或文件大小
 ```bash
 # 查看当前目录大小
@@ -325,19 +463,19 @@ du -sh
 du -sh *
 ```
 
-### tree - 显示目录结构
+### locate - 快速查找文件
 ```bash
-# 以树状结构显示目录内容
-tree
+# 快速查找文件
+locate filename.txt
 
-# 显示目录结构并包含隐藏文件
-tree -a
+# 忽略大小写查找文件
+locate -i filename.txt
 
-# 显示目录结构并显示文件大小
-tree -h
+# 只显示前10个匹配结果
+locate -n 10 filename.txt
 
-# 只显示指定深度的目录结构
-tree -L 2
+# 显示匹配结果的数量
+locate -c filename.txt
 ```
 
 ## 文本处理
@@ -485,6 +623,40 @@ patch file1.txt < file.patch
 # 撤销补丁
 patch -R file1.txt < file.patch
 ```
+
+## 文本处理
+
+### xargs - 将标准输入转换为命令行参数
+```bash
+# 将当前目录下的所有.txt文件复制到指定目录
+ls *.txt | xargs cp -t /path/to/directory/
+
+# 删除当前目录下的所有.txt文件
+ls *.txt | xargs rm
+
+# 查找当前目录下的所有.txt文件并显示它们的内容
+find . -name "*.txt" | xargs cat
+
+# 将标准输入中的每行作为一个参数传递给命令
+echo -e "file1.txt\nfile2.txt\nfile3.txt" | xargs rm
+```
+
+### tee - 读取标准输入并写入到文件和标准输出
+```bash
+# 将命令输出写入到文件并显示在终端
+command | tee output.txt
+
+# 将命令输出追加到文件并显示在终端
+command | tee -a output.txt
+
+# 将命令输出写入到多个文件并显示在终端
+command | tee output1.txt output2.txt output3.txt
+
+# 将命令输出写入到文件但不显示在终端
+command | tee output.txt > /dev/null
+```
+
+## 编辑器
 
 ### vim - 文本编辑器
 ```bash
@@ -733,37 +905,124 @@ nice -n 10 command
 renice 10 -p 1234
 ```
 
+### lsof - 根据端口查找进程
+```bash
+# 根据端口查找进程
+lsof -i :8080
+
+# 查找所有监听端口的进程
+lsof -i
+
+# 查找指定协议的进程
+lsof -i tcp:8080
+
+# 查找指定用户的进程
+lsof -u username
+
+# 查找指定进程打开的文件
+lsof -p 1234
+```
+
+### nohup - 在后台执行命令，即使终端关闭
+```bash
+# 在后台执行命令，即使终端关闭
+nohup command &
+
+# 在后台执行命令，即使终端关闭，并将输出写入到指定文件
+nohup command > output.log 2>&1 &
+
+# 查看后台执行的命令
+jobs
+
+# 将后台执行的命令切换到前台
+fg job_number
+
+# 将前台执行的命令切换到后台
+Ctrl+z
+bg job_number
+```
+
+### screen - 多窗口终端管理器
+```bash
+# 创建新的screen会话
+screen
+
+# 创建新的screen会话并指定名称
+screen -S session_name
+
+# 列出所有screen会话
+screen -ls
+
+# 连接到指定的screen会话
+screen -r session_name
+
+# 断开当前screen会话
+Ctrl+a d
+
+# 关闭当前screen会话
+exit
+
+# 在screen会话中创建新窗口
+Ctrl+a c
+
+# 在screen会话中切换窗口
+Ctrl+a n
+Ctrl+a p
+
+# 在screen会话中查看所有窗口
+Ctrl+a "
+
+# 在screen会话中关闭当前窗口
+Ctrl+a k
+```
+
+### tmux - 终端复用器
+```bash
+# 创建新的tmux会话
+tmux
+
+# 创建新的tmux会话并指定名称
+tmux new -s session_name
+
+# 列出所有tmux会话
+tmux ls
+
+# 连接到指定的tmux会话
+tmux attach -t session_name
+
+# 断开当前tmux会话
+Ctrl+b d
+
+# 关闭当前tmux会话
+exit
+
+# 在tmux会话中创建新窗口
+Ctrl+b c
+
+# 在tmux会话中切换窗口
+Ctrl+b n
+Ctrl+b p
+
+# 在tmux会话中查看所有窗口
+Ctrl+b w
+
+# 在tmux会话中关闭当前窗口
+Ctrl+b &
+
+# 在tmux会话中水平分割窗口
+Ctrl+b %
+
+# 在tmux会话中垂直分割窗口
+Ctrl+b "
+
+# 在tmux会话中切换窗格
+Ctrl+b arrow_keys
+
+# 在tmux会话中关闭当前窗格
+Ctrl+b x
+```
+
 ## 系统信息
-
-### df - 查看磁盘空间使用情况
-```bash
-# 查看磁盘空间使用情况
-df
-
-# 查看磁盘空间（人类可读格式）
-df -h
-```
-
-### free - 查看内存使用情况
-```bash
-# 查看内存使用情况
-free
-
-# 查看内存使用情况（人类可读格式）
-free -h
-```
-
-### date - 显示或设置系统时间
-```bash
-# 显示当前系统时间
-date
-
-# 显示当前时间的详细信息
-date -R
-
-# 设置系统时间
-date -s "2025-12-30 14:30:00"
-```
 
 ### uptime - 显示系统运行时间
 ```bash
@@ -796,393 +1055,1537 @@ uname -a
 
 # 显示内核版本
 uname -r
-
-# 显示硬件架构
-uname -m
 ```
 
-### lsof - 列出打开的文件
+### df - 查看磁盘空间使用情况
 ```bash
-# 列出所有打开的文件
-lsof
+# 查看磁盘空间使用情况
+df
 
-# 列出指定用户打开的文件
-lsof -u username
-
-# 列出指定端口打开的文件
-lsof -i :80
+# 查看磁盘空间（人类可读格式）
+df -h
 ```
 
-### netstat - 网络状态统计
+### free - 查看内存使用情况
 ```bash
-# 查看所有网络连接
-netstat -a
+# 查看内存使用情况
+free
 
-# 查看TCP连接
-netstat -t
-
-# 查看UDP连接
-netstat -u
-
-# 查看监听状态的连接
-netstat -l
-
-# 查看网络连接和进程ID
-netstat -p
+# 查看内存使用情况（人类可读格式）
+free -h
 ```
 
-### ss - 网络套接字统计
+### date - 查看或设置系统时间
 ```bash
-# 查看所有网络连接
-ss -a
+# 查看当前系统时间
+date
 
-# 查看TCP连接
-ss -t
+# 查看当前系统时间（指定格式）
+date +"%Y-%m-%d %H:%M:%S"
 
-# 查看UDP连接
-ss -u
+# 设置系统时间（需要管理员权限）
+date -s "2025-12-30 12:00:00"
 
-# 查看监听状态的连接
-ss -l
+# 查看当前系统时间的Unix时间戳
+date +%s
 
-# 查看网络连接和进程ID
-ss -p
+# 将Unix时间戳转换为系统时间
+date -d @1735689600
 ```
 
-## 环境变量
-
-### env - 查看环境变量
+### cal - 显示日历
 ```bash
-# 查看所有环境变量
-env
+# 显示当前月份的日历
+cal
 
-# 查看指定环境变量
-echo $PATH
-echo $HOME
+# 显示指定年份的日历
+cal 2025
+
+# 显示指定月份和年份的日历
+cal 12 2025
+
+# 显示当前月份的日历并突出显示今天
+cal -h
+
+# 显示当前月份的日历并显示周数
+cal -w
 ```
 
-### export - 设置环境变量
+### w - 显示当前登录用户和他们正在执行的命令
 ```bash
-# 设置临时环境变量（仅当前会话有效）
-export VAR_NAME=value
+# 显示当前登录用户和他们正在执行的命令
+w
 
-# 设置带空格的环境变量
-export VAR_NAME="value with spaces"
+# 显示当前登录用户（不显示他们正在执行的命令）
+w -h
 
-# 在环境变量中添加路径
-export PATH=$PATH:/new/path
-
-# 使环境变量对所有用户生效（需要写入配置文件）
-# 在/etc/profile或/etc/environment中添加
-export VAR_NAME=value
+# 显示指定用户的信息
+w username
 ```
 
-### set - 查看shell变量
+### last - 查看用户登录历史
 ```bash
-# 查看所有shell变量（包括环境变量）
-set
+# 查看用户登录历史
+last
+
+# 查看指定用户的登录历史
+last username
+
+# 查看用户登录历史（只显示前10条）
+last -n 10
+
+# 查看用户登录历史（显示IP地址）
+last -i
 ```
 
-### unset - 删除环境变量
+### who - 显示当前登录用户
 ```bash
-# 删除指定环境变量
-unset VAR_NAME
+# 显示当前登录用户
+who
+
+# 显示当前登录用户（包括IP地址）
+who -i
+
+# 显示当前登录用户的详细信息
+who -a
 ```
 
-### source - 加载环境变量配置
+## 压缩与解压
+
+### tar - 归档工具
 ```bash
-# 加载当前用户的bash配置
-source ~/.bashrc
+# 创建归档文件
+ tar -cvf archive.tar file1 file2 directory/
 
-# 加载系统级bash配置
-source /etc/bashrc
+# 查看归档文件内容
+ tar -tvf archive.tar
 
-# 加载环境变量文件
-source env_file
+# 提取归档文件
+ tar -xvf archive.tar
+
+# 创建gzip压缩的归档文件
+ tar -czvf archive.tar.gz file1 file2 directory/
+
+# 提取gzip压缩的归档文件
+ tar -xzvf archive.tar.gz
+
+# 创建bzip2压缩的归档文件
+ tar -cjvf archive.tar.bz2 file1 file2 directory/
+
+# 提取bzip2压缩的归档文件
+ tar -xjvf archive.tar.bz2
+
+# 创建xz压缩的归档文件
+ tar -cJvf archive.tar.xz file1 file2 directory/
+
+# 提取xz压缩的归档文件
+ tar -xJvf archive.tar.xz
 ```
 
-## 系统服务
-
-### systemctl - systemd服务管理工具
+### gzip - 压缩工具
 ```bash
-# 启动服务
-systemctl start service_name
+# 压缩文件
+ gzip file.txt
 
-# 停止服务
-systemctl stop service_name
+# 解压文件
+ gzip -d file.txt.gz
 
-# 重启服务
-systemctl restart service_name
+# 查看压缩文件内容
+ gzip -l file.txt.gz
 
-# 重新加载服务配置
-systemctl reload service_name
-
-# 查看服务状态
-systemctl status service_name
-
-# 设置服务开机自启
-systemctl enable service_name
-
-# 禁用服务开机自启
-systemctl disable service_name
-
-# 查看服务是否开机自启
-systemctl is-enabled service_name
-
-# 查看所有正在运行的服务
-systemctl list-units --type=service
-
-# 查看所有服务（包括未运行的）
-systemctl list-units --type=service --all
-
-# 查看系统启动日志
-systemctl status
-
-# 重新加载systemd配置
-systemctl daemon-reload
+# 保留原文件并压缩
+ gzip -c file.txt > file.txt.gz
 ```
 
-### service - SysVinit服务管理工具
+### bzip2 - 压缩工具（比gzip压缩率更高）
 ```bash
-# 启动服务
-service service_name start
+# 压缩文件
+ bzip2 file.txt
 
-# 停止服务
-service service_name stop
+# 解压文件
+ bzip2 -d file.txt.bz2
 
-# 重启服务
-service service_name restart
+# 查看压缩文件内容
+ bzip2 -t file.txt.bz2
 
-# 重新加载服务配置
-service service_name reload
-
-# 查看服务状态
-service service_name status
-
-# 查看所有服务状态
-service --status-all
+# 保留原文件并压缩
+ bzip2 -c file.txt > file.txt.bz2
 ```
 
-### journalctl - 系统日志管理
+### zip/unzip - 跨平台压缩工具
 ```bash
-# 查看所有日志
-journalctl
+# 创建zip压缩文件
+ zip archive.zip file1 file2 directory/
 
-# 查看最近的日志
-journalctl -n 100
+# 查看zip文件内容
+ zip -l archive.zip
 
-# 实时查看日志
-journalctl -f
+# 加密zip文件
+ zip -e archive.zip file1 file2
 
-# 查看特定服务的日志
-journalctl -u service_name
+# 解压zip文件
+ unzip archive.zip
 
-# 查看今天的日志
-journalctl --since today
+# 解压到指定目录
+ unzip archive.zip -d /path/to/directory
 
-# 查看指定时间范围的日志
-journalctl --since "2025-12-30 14:00" --until "2025-12-30 15:00"
+# 静默解压
+ unzip -q archive.zip
 ```
 
-## 用户和权限
+## 磁盘管理
 
-### chmod - 修改文件或目录权限
+### fdisk - 磁盘分区工具
 ```bash
-# 数字方式设置权限（所有者：rwx，组：r-x，其他：r-x）
-chmod 755 filename.txt
+# 查看所有磁盘和分区
+ fdisk -l
 
-# 数字方式设置权限（所有者：rw-，组：r--，其他：r--）
-chmod 644 filename.txt
+# 对指定磁盘进行分区操作
+ fdisk /dev/sda
 
-# 给所有者添加执行权限
-chmod u+x filename.txt
-
-# 移除组的写入权限
-chmod g-w filename.txt
-
-# 给其他用户设置只读权限
-chmod o=r filename.txt
-
-# 给所有用户添加执行权限
-chmod a+x filename.txt
+# 在fdisk交互模式中的常用命令：
+# n - 创建新分区
+# d - 删除分区
+# p - 显示分区表
+# t - 更改分区类型
+# w - 保存更改并退出
+# q - 放弃更改并退出
 ```
 
-### chown - 修改文件或目录的所有者和组
+### mkfs - 创建文件系统
 ```bash
-# 修改所有者
-chown username filename.txt
+# 在分区上创建ext4文件系统
+ mkfs.ext4 /dev/sda1
 
-# 修改所有者和组
-chown username:groupname filename.txt
+# 在分区上创建xfs文件系统
+ mkfs.xfs /dev/sda1
 
-# 递归修改目录及其内容的所有者
-chown -R username directory/
+# 在分区上创建fat32文件系统
+ mkfs.vfat /dev/sda1
+
+# 快速格式化（不检查坏块）
+ mkfs.ext4 -F /dev/sda1
 ```
 
-### sudo - 以管理员权限执行命令
+### mount - 挂载文件系统
 ```bash
-# 以管理员权限执行命令
-sudo command
+# 挂载分区到指定目录
+ mount /dev/sda1 /mnt
 
-# 切换到root用户
-sudo su
+# 挂载ISO文件
+ mount -o loop /path/to/image.iso /mnt
 
-# 以指定用户身份执行命令
-sudo -u username command
+# 挂载NFS共享
+ mount -t nfs server:/share /mnt
+
+# 挂载Windows共享
+ mount -t cifs //server/share /mnt -o username=user,password=pass
+
+# 以只读方式挂载
+ mount -o ro /dev/sda1 /mnt
 ```
 
-### chgrp - 修改文件或目录的所属组
+### umount - 卸载文件系统
 ```bash
-# 修改文件的所属组
-chgrp groupname filename.txt
+# 卸载指定挂载点
+ umount /mnt
 
-# 递归修改目录及其内容的所属组
-chgrp -R groupname directory/
+# 卸载指定设备
+ umount /dev/sda1
+
+# 强制卸载（谨慎使用）
+ umount -f /mnt
+
+# 延迟卸载（当文件系统不再被使用时）
+ umount -l /mnt
 ```
 
-### su - 切换用户
+### fsck - 文件系统检查
 ```bash
-# 切换到root用户
-su
+# 检查文件系统（未挂载状态）
+fsck /dev/sda1
 
-# 切换到指定用户
-su username
+# 自动修复文件系统错误
+fsck -y /dev/sda1
 
-# 切换到指定用户并加载其环境变量
-su - username
+# 详细检查并显示进度
+fsck -v /dev/sda1
+
+# 检查ext4文件系统
+fsck.ext4 /dev/sda1
 ```
 
-### id - 查看用户和组信息
+### dd - 转换和复制文件
 ```bash
-# 查看当前用户的UID、GID和所属组
-id
+# 将文件复制到另一个文件
+dd if=input_file of=output_file
 
-# 查看指定用户的信息
-id username
+# 将文件复制到另一个文件并指定块大小
+dd if=input_file of=output_file bs=4k
+
+# 创建一个大小为1GB的空文件
+dd if=/dev/zero of=empty_file bs=1M count=1000
+
+# 创建一个大小为1GB的随机文件
+dd if=/dev/urandom of=random_file bs=1M count=1000
+
+# 将ISO文件写入到USB设备（需要管理员权限）
+dd if=image.iso of=/dev/sdb bs=4k status=progress
 ```
 
-### groups - 查看用户所属组
+### rsync - 远程同步文件
 ```bash
-# 查看当前用户所属组
-groups
+# 同步本地文件到远程服务器
+rsync -avz local_file username@remote_host:/path/to/directory/
 
-# 查看指定用户所属组
-groups username
+# 同步远程服务器文件到本地
+rsync -avz username@remote_host:/path/to/remote_file /path/to/local_directory/
+
+# 同步本地目录到远程服务器
+rsync -avz local_directory/ username@remote_host:/path/to/remote_directory/
+
+# 同步远程服务器目录到本地
+rsync -avz username@remote_host:/path/to/remote_directory/ /path/to/local_directory/
+
+# 同步文件并删除目标目录中不存在的文件
+rsync -avz --delete local_directory/ username@remote_host:/path/to/remote_directory/
 ```
 
-### adduser - 添加用户（Debian/Ubuntu）
+### sync - 将内存中的数据写入磁盘
 ```bash
-# 添加新用户
-adduser username
+# 将内存中的数据写入磁盘
+sync
+
+# 将内存中的数据写入磁盘并显示进度
+sync -f
 ```
 
-### useradd - 添加用户（CentOS/RHEL）
+## 包管理
+
+### apt - Debian/Ubuntu包管理工具
 ```bash
-# 添加新用户
-useradd username
+# 更新包索引
+ apt update
 
-# 添加用户并指定主目录
-useradd -d /home/username username
+# 升级所有已安装的包
+ apt upgrade
 
-# 添加用户并指定用户组
-useradd -g groupname username
+# 升级系统（包括内核）
+ apt full-upgrade
+
+# 安装包
+ apt install package_name
+
+# 安装多个包
+ apt install package1 package2
+
+# 卸载包（保留配置文件）
+ apt remove package_name
+
+# 卸载包（删除配置文件）
+ apt purge package_name
+
+# 搜索包
+ apt search package_name
+
+# 查看包信息
+ apt show package_name
+
+# 清理缓存
+ apt clean
+
+# 自动移除不需要的依赖
+ apt autoremove
 ```
 
-### deluser - 删除用户（Debian/Ubuntu）
+### yum - CentOS/RHEL 7包管理工具
 ```bash
-# 删除用户
-deluser username
+# 更新所有包
+ yum update
 
-# 删除用户及其主目录
-deluser --remove-home username
+# 安装包
+ yum install package_name
+
+# 安装多个包
+ yum install package1 package2
+
+# 卸载包
+ yum remove package_name
+
+# 搜索包
+ yum search package_name
+
+# 查看包信息
+ yum info package_name
+
+# 列出已安装的包
+ yum list installed
+
+# 清理缓存
+ yum clean all
+
+# 自动移除不需要的依赖
+ yum autoremove
 ```
 
-### userdel - 删除用户（CentOS/RHEL）
+### dnf - CentOS/RHEL 8+包管理工具（yum的替代品）
 ```bash
-# 删除用户
-userdel username
+# 更新所有包
+ dnf update
 
-# 删除用户及其主目录
-userdel -r username
+# 安装包
+ dnf install package_name
+
+# 安装多个包
+ dnf install package1 package2
+
+# 卸载包
+ dnf remove package_name
+
+# 搜索包
+ dnf search package_name
+
+# 查看包信息
+ dnf info package_name
+
+# 列出已安装的包
+ dnf list installed
+
+# 清理缓存
+ dnf clean all
+
+# 自动移除不需要的依赖
+ dnf autoremove
+
+# 查看包的依赖关系
+ dnf deplist package_name
 ```
 
-### passwd - 设置用户密码
+### rpm -  RPM包管理工具
 ```bash
-# 设置当前用户密码
-passwd
+# 安装RPM包
+rpm -ivh package.rpm
 
-# 设置指定用户密码
-passwd username
+# 升级RPM包
+rpm -Uvh package.rpm
+
+# 卸载RPM包
+rpm -e package_name
+
+# 查看已安装的包
+rpm -qa
+
+# 查看包信息
+rpm -qi package_name
+
+# 查看包包含的文件
+rpm -ql package_name
+
+# 检查包的依赖关系
+rpm -qR package_name
 ```
 
-### groupadd - 添加用户组
+### dpkg - Debian包管理工具
 ```bash
-# 添加新用户组
-groupadd groupname
+# 安装Deb包（需要管理员权限）
+dpkg -i package.deb
+
+# 卸载Deb包（需要管理员权限）
+dpkg -r package_name
+
+# 完全卸载Deb包（需要管理员权限）
+dpkg -P package_name
+
+# 查看已安装的包
+dpkg -l
+
+# 查看包信息
+dpkg -s package_name
+
+# 查看包包含的文件
+dpkg -L package_name
+
+# 检查包的依赖关系
+dpkg -I package.deb
 ```
 
-### groupdel - 删除用户组
+### snap - 跨平台包管理工具
 ```bash
-# 删除用户组
-groupdel groupname
+# 安装Snap包
+snap install package_name
+
+# 升级Snap包
+snap refresh package_name
+
+# 卸载Snap包
+snap remove package_name
+
+# 查看已安装的Snap包
+snap list
+
+# 查看Snap包信息
+snap info package_name
+
+# 查看Snap包的配置
+snap get package_name
+
+# 设置Snap包的配置
+snap set package_name key=value
+```
+
+### flatpak - 跨平台包管理工具
+```bash
+# 安装Flatpak包
+flatpak install package_name
+
+# 升级Flatpak包
+flatpak update package_name
+
+# 卸载Flatpak包
+flatpak uninstall package_name
+
+# 查看已安装的Flatpak包
+flatpak list
+
+# 查看Flatpak包信息
+flatpak info package_name
+
+# 运行Flatpak包
+flatpak run package_name
+
+# 添加Flatpak仓库
+flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 ```
 
 ## 网络命令
 
 ### ping - 测试网络连接
 ```bash
-# 测试与目标主机的网络连接
-ping google.com
+# 测试网络连接
+ ping 192.168.1.1
 
-# 发送指定数量的ICMP包
-ping -c 4 google.com
-
-# 设置超时时间
-ping -W 2 google.com
+# 测试域名解析
+ ping google.com
 ```
 
-### ifconfig - 查看网络接口
+### netstat - 查看网络状态和端口
 ```bash
-# 查看网络接口信息
-ifconfig
+# 查看所有监听端口
+netstat -tuln
 
-# 查看指定网络接口信息
-ifconfig eth0
+# 查看所有网络连接
+netstat -ant
+
+# 根据端口查找进程
+netstat -tuln | grep 8080
+
+# 查看端口对应的进程
+netstat -tulnp | grep 8080
 ```
 
-### ip - 网络配置工具
+### ss - 查看网络状态（netstat 的替代工具）
 ```bash
-# 查看所有网络接口信息
-ip addr
-ip a
+# 查看所有监听端口
+ss -tuln
+
+# 根据端口查找进程
+ss -tuln | grep 8080
+
+# 查看详细的网络连接信息
+ss -ant
+
+# 查看指定端口的进程
+ss -tulnp | grep 8080
+```
+
+### curl - 发送HTTP请求
+```bash
+# 发送HTTP GET请求并显示响应
+curl https://example.com
+
+# 发送HTTP GET请求并将响应保存到文件
+curl https://example.com > response.html
+
+# 发送HTTP POST请求并发送数据
+curl -X POST -d "username=user&password=pass" https://example.com/login
+
+# 发送HTTP请求并设置请求头
+curl -H "Content-Type: application/json" -d '{"key": "value"}' https://example.com/api
+
+# 发送HTTP请求并跟随重定向
+curl -L https://example.com
+
+# 发送HTTP请求并显示请求和响应头
+curl -v https://example.com
+```
+
+### wget - 下载文件
+```bash
+# 下载文件
+wget https://example.com/file.txt
+
+# 下载文件并指定保存文件名
+wget -O new_filename.txt https://example.com/file.txt
+
+# 断点续传下载文件
+wget -c https://example.com/large_file.iso
+
+# 递归下载网站
+wget -r https://example.com
+
+# 下载文件并限制下载速度
+wget --limit-rate=100k https://example.com/large_file.iso
+```
+
+### scp - 远程复制文件
+```bash
+# 将本地文件复制到远程服务器
+scp local_file username@remote_host:/path/to/directory/
+
+# 将远程服务器文件复制到本地
+scp username@remote_host:/path/to/remote_file /path/to/local_directory/
+
+# 将本地目录复制到远程服务器
+scp -r local_directory/ username@remote_host:/path/to/remote_directory/
+
+# 将远程服务器目录复制到本地
+scp -r username@remote_host:/path/to/remote_directory/ /path/to/local_directory/
+
+# 复制文件并指定端口
+scp -P 2222 local_file username@remote_host:/path/to/directory/
+```
+
+### ssh - 远程登录
+```bash
+# 远程登录到服务器
+ssh username@remote_host
+
+# 远程登录到服务器并指定端口
+ssh -p 2222 username@remote_host
+
+# 远程登录到服务器并执行命令
+ssh username@remote_host "command"
+
+# 远程登录到服务器并执行多个命令
+ssh username@remote_host "command1; command2; command3"
+
+# 远程登录到服务器并转发端口
+ssh -L 8080:localhost:80 username@remote_host
+
+# 远程登录到服务器并反向转发端口
+ssh -R 8080:localhost:80 username@remote_host
+```
+
+### traceroute - 跟踪数据包的传输路径
+```bash
+# 跟踪数据包的传输路径
+traceroute example.com
+
+# 跟踪数据包的传输路径并指定最大跳数
+traceroute -m 20 example.com
+
+# 跟踪数据包的传输路径并指定数据包大小
+traceroute -s 100 example.com
+
+# 跟踪数据包的传输路径并使用ICMP协议
+traceroute -I example.com
+```
+
+### mtr - 结合ping和traceroute的工具
+```bash
+# 跟踪数据包的传输路径并显示每个节点的丢包率
+mtr example.com
+
+# 跟踪数据包的传输路径并指定最大跳数
+mtr -m 20 example.com
+
+# 跟踪数据包的传输路径并指定数据包大小
+mtr -s 100 example.com
+
+# 跟踪数据包的传输路径并使用ICMP协议
+mtr --icmp example.com
+
+# 跟踪数据包的传输路径并将结果保存到文件
+mtr -r example.com > mtr_result.txt
+```
+
+# 指定发送数据包数量
+ ping -c 5 192.168.1.1
+
+# 指定数据包大小
+ ping -s 1000 192.168.1.1
+
+# 禁用DNS解析
+ ping -n 192.168.1.1
+
+# 持续ping直到被中断
+ ping 192.168.1.1
+```
+
+### traceroute - 跟踪网络路由
+```bash
+# 跟踪网络路由
+ traceroute google.com
+
+# 使用ICMP协议
+ traceroute -I google.com
+
+# 使用TCP协议
+ traceroute -T -p 80 google.com
+
+# 设置最大跳数
+ traceroute -m 20 google.com
+
+# 禁用DNS解析
+ traceroute -n google.com
+```
+
+### curl - 网络请求工具
+```bash
+# 发送GET请求
+ curl https://api.example.com
+
+# 发送POST请求
+ curl -X POST -d "key=value" https://api.example.com
+
+# 发送JSON数据
+ curl -X POST -H "Content-Type: application/json" -d '{"key":"value"}' https://api.example.com
+
+# 下载文件
+ curl -o filename.txt https://example.com/file.txt
+
+# 断点续传
+ curl -C - -o filename.txt https://example.com/file.txt
+
+# 跟随重定向
+ curl -L https://example.com
+
+# 添加请求头
+ curl -H "Authorization: Bearer token" https://api.example.com
+
+# 显示详细信息
+ curl -v https://example.com
+```
+
+### wget - 网络下载工具
+```bash
+# 下载文件
+ wget https://example.com/file.txt
+
+# 下载并指定文件名
+ wget -O filename.txt https://example.com/file.txt
+
+# 断点续传
+ wget -c https://example.com/largefile.zip
+
+# 批量下载
+ wget -i urls.txt
+
+# 后台下载
+ wget -b https://example.com/largefile.zip
+
+# 限速下载
+ wget --limit-rate=100k https://example.com/largefile.zip
+
+# 递归下载整个网站
+ wget -r -np https://example.com/docs/
+
+# 下载时排除指定文件
+ wget --reject=gif https://example.com/
+```
+
+### ifconfig - 查看网络接口信息（旧版）
+```bash
+# 查看所有网络接口
+ ifconfig
+
+# 查看指定网络接口
+ ifconfig eth0
+
+# 启用网络接口
+ ifconfig eth0 up
+
+# 禁用网络接口
+ ifconfig eth0 down
+
+# 配置IP地址
+ ifconfig eth0 192.168.1.100 netmask 255.255.255.0
+```
+
+### ip - 查看网络接口信息（新版）
+```bash
+# 查看所有网络接口
+ ip addr
+
+# 查看指定网络接口
+ ip addr show eth0
+
+# 启用网络接口
+ ip link set eth0 up
+
+# 禁用网络接口
+ ip link set eth0 down
+
+# 配置IP地址
+ ip addr add 192.168.1.100/24 dev eth0
+
+# 删除IP地址
+ ip addr del 192.168.1.100/24 dev eth0
 
 # 查看路由表
-ip route
-ip r
+ ip route
 
-# 查看网络连接
-ip link
+# 添加路由
+ ip route add 10.0.0.0/24 via 192.168.1.1
+
+# 删除路由
+ ip route del 10.0.0.0/24
 ```
 
-### curl - 数据传输工具
-```bash
-# 下载网页内容到终端
-curl https://www.google.com
+## 用户与权限管理
 
+### useradd - 创建用户
+```bash
+# 创建新用户
+ useradd username
+
+# 创建用户并指定主目录
+ useradd -d /home/username username
+
+# 创建用户并指定登录shell
+ useradd -s /bin/bash username
+
+# 创建用户并指定用户组
+ useradd -g groupname username
+
+# 创建用户并指定多个附加组
+ useradd -G group1,group2 username
+
+# 创建系统用户
+ useradd -r username
+```
+
+### usermod - 修改用户属性
+```bash
+# 修改用户主目录
+ usermod -d /new/home/dir username
+
+# 修改用户登录shell
+ usermod -s /bin/zsh username
+
+# 修改用户名
+ usermod -l newusername oldusername
+
+# 修改用户所属的主要组
+ usermod -g groupname username
+
+# 添加用户到附加组
+ usermod -aG groupname username
+
+# 锁定用户账户
+ usermod -L username
+
+# 解锁用户账户
+ usermod -U username
+```
+
+### userdel - 删除用户
+```bash
+# 删除用户
+ userdel username
+
+# 删除用户及其主目录
+ userdel -r username
+```
+
+### passwd - 修改密码
+```bash
+# 修改当前用户密码
+ passwd
+
+# 修改指定用户密码
+ passwd username
+
+# 锁定用户密码
+ passwd -l username
+
+# 解锁用户密码
+ passwd -u username
+
+# 强制用户下次登录时修改密码
+ passwd -e username
+
+# 查看用户密码状态
+ passwd -S username
+```
+
+### groupadd - 创建用户组
+```bash
+# 创建新用户组
+ groupadd groupname
+
+# 创建系统用户组
+ groupadd -r groupname
+
+# 创建用户组并指定GID
+ groupadd -g 1000 groupname
+```
+
+### groupmod - 修改用户组属性
+```bash
+# 修改用户组名称
+ groupmod -n newgroupname oldgroupname
+
+# 修改用户组GID
+ groupmod -g 1001 groupname
+```
+
+### groupdel - 删除用户组
+```bash
+# 删除用户组
+ groupdel groupname
+```
+
+### chmod - 修改文件权限
+```bash
+# 使用数字方式修改权限
+ chmod 755 filename.txt
+
+# 使用符号方式修改权限
+ chmod u+rwx,g+rx,o+rx filename.txt
+
+# 添加执行权限
+ chmod +x filename.sh
+
+# 递归修改目录及其内容的权限
+ chmod -R 755 directory/
+
+# 设置SUID权限
+ chmod u+s filename
+
+# 设置SGID权限
+ chmod g+s directory/
+
+# 设置粘性位
+ chmod +t directory/
+```
+
+### chown - 修改文件所有者和所属组
+```bash
+# 修改文件所有者
+ chown username filename.txt
+
+# 修改文件所有者和所属组
+ chown username:groupname filename.txt
+
+# 递归修改目录及其内容的所有者
+ chown -R username directory/
+
+# 只修改文件所属组
+ chown :groupname filename.txt
+```
+
+### chgrp - 修改文件所属组
+```bash
+# 修改文件所属组
+ chgrp groupname filename.txt
+
+# 递归修改目录及其内容的所属组
+ chgrp -R groupname directory/
+```
+
+### su - 切换用户
+```bash
+# 切换到root用户
+ su
+
+# 切换到指定用户
+ su username
+
+# 切换用户并执行指定命令
+ su -c "command" username
+
+# 切换用户并加载用户环境变量
+ su - username
+```
+
+### sudo - 以其他用户身份执行命令
+```bash
+# 以root身份执行命令
+ sudo command
+
+# 以指定用户身份执行命令
+ sudo -u username command
+
+# 编辑文件
+ sudoedit filename.txt
+
+# 查看sudo权限
+ sudo -l
+```
+
+## 系统服务管理
+
+### systemctl - 系统服务管理（systemd）
+```bash
+# 启动服务
+ systemctl start service_name
+
+# 停止服务
+ systemctl stop service_name
+
+# 重启服务
+ systemctl restart service_name
+
+# 重新加载服务配置
+ systemctl reload service_name
+
+# 查看服务状态
+ systemctl status service_name
+
+# 启用服务（开机自启）
+ systemctl enable service_name
+
+# 禁用服务（禁止开机自启）
+ systemctl disable service_name
+
+# 查看服务是否启用
+ systemctl is-enabled service_name
+
+# 查看所有运行中的服务
+ systemctl list-units --type=service --state=running
+
+# 查看所有服务（包括未运行的）
+ systemctl list-units --type=service
+
+# 查看服务依赖关系
+ systemctl list-dependencies service_name
+
+# 查看服务的启动日志
+ journalctl -u service_name
+```
+
+### service - 系统服务管理（SysV）
+```bash
+# 启动服务
+ service service_name start
+
+# 停止服务
+ service service_name stop
+
+# 重启服务
+ service service_name restart
+
+# 重新加载服务配置
+ service service_name reload
+
+# 查看服务状态
+ service service_name status
+```
+
+### systemd-analyze - 系统启动分析
+```bash
+# 查看系统启动时间
+ systemd-analyze
+
+# 查看启动项的详细耗时
+ systemd-analyze blame
+
+# 生成启动依赖图
+ systemd-analyze plot > boot.svg
+
+# 查看系统启动关键路径
+ systemd-analyze critical-chain
+```
+
+### init - 系统初始化进程
+```bash
+# 切换运行级别（已被systemctl替代）
+ init 3
+
+# 关机
+ init 0
+
+# 重启
+ init 6
+```
+
+## 时间日期管理
+
+### date - 显示或设置系统时间
+```bash
+# 显示当前系统时间
+ date
+
+# 以指定格式显示时间
+ date +"%Y-%m-%d %H:%M:%S"
+
+# 显示UTC时间
+ date -u
+
+# 设置系统时间
+ date -s "2024-01-30 12:00:00"
+
+# 显示时间戳
+ date +%s
+
+# 根据时间戳显示时间
+ date -d @1609459200
+
+# 显示明天的日期
+ date -d tomorrow
+
+# 显示昨天的日期
+ date -d yesterday
+
+# 显示一周后的日期
+ date -d "+7 days"
+```
+
+### timedatectl - 时间和日期管理
+```bash
+# 查看系统时间和日期状态
+ timedatectl
+
+# 设置系统时区
+ timedatectl set-timezone Asia/Shanghai
+
+# 查看所有可用时区
+ timedatectl list-timezones
+
+# 启用NTP时间同步
+ timedatectl set-ntp true
+
+# 禁用NTP时间同步
+ timedatectl set-ntp false
+
+# 设置系统时间
+ timedatectl set-time "2024-01-30 12:00:00"
+
+# 设置系统日期
+ timedatectl set-time "2024-01-30"
+
+# 设置系统时间（仅时间部分）
+ timedatectl set-time "12:00:00"
+```
+
+### hwclock - 硬件时钟管理
+```bash
+# 查看硬件时钟
+ hwclock
+
+# 将系统时间同步到硬件时钟
+ hwclock --systohc
+
+# 将硬件时钟同步到系统时间
+ hwclock --hctosys
+
+# 以UTC格式查看硬件时钟
+ hwclock --utc
+
+# 以本地时间格式查看硬件时钟
+ hwclock --localtime
+```
+
+## 进程调度管理
+
+### cron - 定时任务调度
+```bash
+# 编辑当前用户的crontab
+ crontab -e
+
+# 查看当前用户的crontab
+ crontab -l
+
+# 删除当前用户的crontab
+ crontab -r
+
+# 查看系统级别的cron文件
+ ls /etc/cron.*
+
+# 查看cron服务状态
+ systemctl status cron
+
+# 启动cron服务
+ systemctl start cron
+
+# 启用cron服务（开机自启）
+ systemctl enable cron
+
+# crontab格式：
+# 分钟 小时 日 月 星期 命令
+# 0-59 0-23 1-31 1-12 0-6 command
+# 示例：每天凌晨1点执行备份
+# 0 1 * * * /path/to/backup.sh
+# 示例：每小时执行一次命令
+# 0 * * * * /path/to/command.sh
+# 示例：每周日上午10点执行命令
+# 0 10 * * 0 /path/to/command.sh
+```
+
+### at - 一次性任务调度
+```bash
+# 创建一次性任务（交互式）
+ at 12:00
+> /path/to/command.sh
+> Ctrl+D
+
+# 创建一次性任务（从文件读取）
+ at 12:00 < task.txt
+
+# 创建一次性任务（从标准输入读取）
+ echo "/path/to/command.sh" | at 12:00
+
+# 查看待执行的at任务
+ atq
+
+# 删除指定的at任务
+ atrm 1
+
+# 查看at服务状态
+ systemctl status atd
+
+# 启动at服务
+ systemctl start atd
+
+# 启用at服务（开机自启）
+ systemctl enable atd
+```
+
+### anacron - 非连续运行的定时任务
+```bash
+# 查看anacron配置
+ cat /etc/anacrontab
+
+# 查看anacron状态
+ systemctl status anacron
+
+# 启动anacron服务
+ systemctl start anacron
+
+# 启用anacron服务（开机自启）
+ systemctl enable anacron
+```
+
+## 日志管理
+
+### journalctl - 系统日志管理
+```bash
+# 查看所有系统日志
+ journalctl
+
+# 查看最近的日志
+ journalctl -n 100
+
+# 实时查看日志
+ journalctl -f
+
+# 查看指定服务的日志
+ journalctl -u service_name
+
+# 查看指定时间段的日志
+ journalctl --since "2024-01-30 00:00:00" --until "2024-01-30 23:59:59"
+
+# 查看错误日志
+ journalctl -p err
+
+# 查看引导日志
+ journalctl -b
+
+# 查看上一次引导的日志
+ journalctl -b -1
+
+# 以JSON格式输出日志
+ journalctl -o json
+```
+
+### tail - 查看文件末尾内容（常用于日志）
+```bash
+# 查看文件末尾10行
+ tail filename.log
+
+# 查看文件末尾50行
+ tail -n 50 filename.log
+
+# 实时查看文件内容（日志监控）
+ tail -f filename.log
+
+# 实时查看文件内容并显示时间戳
+ tail -F --timestamp=iso filename.log
+
+# 查看多个日志文件
+ tail -f file1.log file2.log
+```
+
+### head - 查看文件开头内容
+```bash
+# 查看文件开头10行
+ head filename.log
+
+# 查看文件开头50行
+ head -n 50 filename.log
+```
+
+### grep - 搜索日志内容
+```bash
+# 在日志文件中搜索关键词
+ grep "error" filename.log
+
+# 忽略大小写搜索
+ grep -i "error" filename.log
+
+# 显示匹配行的前后上下文
+ grep -A 5 -B 5 "error" filename.log
+
+# 递归搜索目录中的日志文件
+ grep -r "error" /var/log/
+
+# 统计匹配次数
+ grep -c "error" filename.log
+```
+
+### logrotate - 日志轮转管理
+```bash
+# 查看logrotate配置
+ cat /etc/logrotate.conf
+
+# 查看应用特定的logrotate配置
+ ls /etc/logrotate.d/
+
+# 手动执行logrotate
+ logrotate /etc/logrotate.conf
+
+# # 强制执行logrotate
+ logrotate -f /etc/logrotate.conf
+
+# # 测试logrotate配置
+ logrotate -d /etc/logrotate.conf
+```
+
+# 安装多个软件包
+apt install package1 package2 package3
+
+# 卸载指定软件包
+apt remove package_name
+
+# 卸载指定软件包并删除配置文件
+apt purge package_name
+
+# 搜索软件包
+apt search package_name
+
+# 查看软件包信息
+apt show package_name
+
+# 清理缓存
+apt clean
+
+# 自动移除不需要的依赖
+apt autoremove
+```
+
+### yum - CentOS/RHEL 7包管理
+```bash
+# 安装指定软件包
+yum install package_name
+
+# 升级所有已安装的软件包
+yum update
+
+# 升级指定软件包
+yum update package_name
+
+# 卸载指定软件包
+yum remove package_name
+
+# 搜索软件包
+yum search package_name
+
+# 查看软件包信息
+yum info package_name
+
+# 列出已安装的软件包
+yum list installed
+
+# 清理缓存
+yum clean all
+```
+
+### dnf - CentOS/RHEL 8+包管理
+```bash
+# 安装指定软件包
+dnf install package_name
+
+# 升级所有已安装的软件包
+dnf update
+
+# 升级指定软件包
+dnf update package_name
+
+# 卸载指定软件包
+dnf remove package_name
+
+# 搜索软件包
+dnf search package_name
+
+# 查看软件包信息
+dnf info package_name
+
+# 列出已安装的软件包
+dnf list installed
+
+# 清理缓存
+dnf clean all
+```
+
+## 其他实用命令
+
+### screen - 终端会话管理
+```bash
+# 安装screen
+sudo apt install screen  # Ubuntu/Debian
+sudo yum install screen  # CentOS/RHEL
+
+# 创建新的screen会话
+screen -S session_name
+
+# 列出所有screen会话
+screen -ls
+
+# 重新连接到指定screen会话
+screen -r session_name
+
+# 分离当前screen会话（按Ctrl+a+d）
+
+# 终止screen会话
+screen -S session_name -X quit
+```
+
+### tmux - 终端复用器
+```bash
+# 安装tmux
+sudo apt install tmux  # Ubuntu/Debian
+sudo yum install tmux  # CentOS/RHEL
+
+# 创建新的tmux会话
+tmux new -s session_name
+
+# 列出所有tmux会话
+tmux ls
+
+# 重新连接到指定tmux会话
+tmux attach -t session_name
+
+# 分离当前tmux会话（按Ctrl+b+d）
+
+# 终止tmux会话
+tmux kill-session -t session_name
+
+# 垂直分割窗口（按Ctrl+b+%）
+
+# 水平分割窗口（按Ctrl+b+"）
+
+# 在窗口间切换（按Ctrl+b+方向键）
+```
+
+### watch - 重复执行命令
+```bash
+# 每2秒执行一次命令
+watch command
+
+# 每1秒执行一次命令
+watch -n 1 command
+
+# 高亮显示变化的部分
+watch -d command
+
+# 示例：实时查看内存使用情况
+watch -n 1 free -h
+
+# 示例：实时查看磁盘使用情况
+watch -n 1 df -h
+```
+
+### xargs - 命令参数处理
+```bash
+# 将管道输出作为命令参数
+find . -name "*.txt" | xargs ls -l
+
+# 将管道输出作为命令参数（每个参数一行）
+find . -name "*.txt" | xargs -L 1 cat
+
+# 并行执行命令
+find . -name "*.txt" | xargs -P 4 grep "search_text"
+
+# 示例：批量删除文件
+find . -name "*.tmp" | xargs rm
+
+# 示例：批量重命名文件
+echo file1.txt file2.txt file3.txt | xargs -n 1 -I {} mv {} {}.bak
+```
+
+### find - 高级文件查找
+```bash
+# 查找指定名称的文件
+find . -name "filename.txt"
+
+# 查找指定类型的文件
+find . -type f -name "*.txt"  # 普通文件
+find . -type d -name "dir*"   # 目录
+find . -type l -name "link*"   # 符号链接
+
+# 查找指定大小的文件
+find . -type f -size +100M  # 大于100MB
+find . -type f -size -10M   # 小于10MB
+find . -type f -size 1M     # 等于1MB
+
+# 查找指定时间的文件
+find . -type f -mtime -7    # 7天内修改的文件
+find . -type f -mtime +30   # 30天前修改的文件
+find . -type f -atime -1    # 1天内访问的文件
+
+# 查找指定权限的文件
+find . -type f -perm 644    # 权限为644的文件
+
+# 查找并执行命令
+find . -name "*.txt" -exec cat {} \;
+find . -name "*.txt" -exec grep "search" {} \;
+
+# 查找并删除文件
+find . -name "*.tmp" -delete
+```
+
+### curl - 高级用法
+```bash
 # 下载文件
 curl -O https://example.com/file.zip
 
 # 下载文件并保存为指定名称
 curl -o new_filename.zip https://example.com/file.zip
 
-# 发送POST请求
-curl -X POST -d "param1=value1&param2=value2" https://example.com/api
+# 断点续传
+curl -C - -O https://example.com/largefile.zip
 
-# 发送带有头信息的请求
+# 限速下载
+curl --limit-rate 100k -O https://example.com/file.zip
+
+# 显示响应头信息
+curl -I https://example.com
+
+# 跟随重定向
+curl -L https://example.com
+
+# 使用代理
+curl -x http://proxy.example.com:8080 https://example.com
+
+# 发送JSON数据
 curl -H "Content-Type: application/json" -d '{"key":"value"}' https://example.com/api
+
+# 上传文件
+curl -F "file=@/path/to/file.txt" https://example.com/upload
 ```
 
-### wget - 下载工具
+### wget - 高级用法
 ```bash
 # 下载文件
 wget https://example.com/file.zip
@@ -1190,145 +2593,27 @@ wget https://example.com/file.zip
 # 下载文件并保存为指定名称
 wget -O new_filename.zip https://example.com/file.zip
 
+# 断点续传
+wget -c https://example.com/largefile.zip
+
+# 限速下载
+wget --limit-rate=100k https://example.com/file.zip
+
 # 递归下载整个网站
 wget -r https://example.com/
+
+# 递归下载并排除指定目录
+wget -r --exclude-directories=dir1,dir2 https://example.com/
+
+# 下载指定格式的文件
+wget -r -A "*.pdf" https://example.com/
+
+# 后台下载
+wget -b https://example.com/largefile.zip
+
+# 查看下载进度
+wget -q --show-progress https://example.com/file.zip
 ```
-
-### telnet - 远程登录
-```bash
-# 连接到远程主机的指定端口
-telnet example.com 80
-```
-
-### ssh - 安全远程登录
-```bash
-# 连接到远程主机
-ssh username@example.com
-
-# 使用指定端口连接
-ssh -p 2222 username@example.com
-
-# 使用密钥文件连接
-ssh -i /path/to/key.pem username@example.com
-```
-
-### scp - 安全文件传输
-```bash
-# 复制本地文件到远程主机
-scp localfile.txt username@example.com:/remote/path/
-
-# 复制远程文件到本地
-scp username@example.com:/remote/file.txt /local/path/
-
-# 递归复制目录
-scp -r localdir/ username@example.com:/remote/path/
-```
-
-### rsync - 远程同步
-```bash
-# 同步本地目录到远程目录
-rsync -avz localdir/ username@example.com:/remote/path/
-
-# 同步远程目录到本地目录
-rsync -avz username@example.com:/remote/path/ localdir/
-
-# 同步时删除目标目录中不存在的文件
-rsync -avz --delete localdir/ username@example.com:/remote/path/
-```
-
-## 定时任务
-
-### crontab - 定时任务管理
-```bash
-# 查看当前用户的定时任务
-crontab -l
-
-# 编辑当前用户的定时任务
-crontab -e
-
-# 删除当前用户的所有定时任务
-crontab -r
-
-# 查看特定用户的定时任务
-crontab -u username -l
-
-# 编辑特定用户的定时任务
-crontab -u username -e
-
-# cron表达式格式：
-# * * * * * command
-# - - - - - -
-# | | | | | |
-# | | | | | +-- 命令
-# | | | | +---- 星期几（0-7，0和7都表示周日）
-# | | | +------ 月份（1-12）
-# | | +-------- 日期（1-31）
-# | +---------- 小时（0-23）
-# +------------ 分钟（0-59）
-
-# 示例：
-# 每分钟执行一次
-* * * * * command
-
-# 每小时的第30分钟执行
-30 * * * * command
-
-# 每天的凌晨2点执行
-0 2 * * * command
-
-# 每周一的上午10点执行
-0 10 * * 1 command
-
-# 每月1号的上午9点执行
-0 9 1 * * command
-
-# 每5分钟执行一次
-*/5 * * * * command
-
-# 每天的上午8点到12点，每2小时执行一次
-0 8-12/2 * * * command
-```
-
-### at - 一次性定时任务
-```bash
-# 在指定时间执行命令
-at 14:30
-at> command
-at> Ctrl+D
-
-# 在明天的14:30执行命令
-at 14:30 tomorrow
-
-# 在指定日期执行命令
-at 14:30 2025-12-30
-
-# 查看所有待执行的at任务
-atq
-
-# 删除指定的at任务
-atrm job_id
-```
-
-## 压缩和解压缩
-
-### tar - 归档工具
-```bash
-# 创建tar归档文件
-tar -cvf archive.tar files/
-
-# 查看tar归档文件内容
-tar -tvf archive.tar
-
-# 提取tar归档文件
-tar -xvf archive.tar
-
-# 创建gzip压缩的tar文件
-tar -czvf archive.tar.gz files/
-
-# 提取gzip压缩的tar文件
-tar -xzvf archive.tar.gz
-
-# 创建bzip2压缩的tar文件
 tar -cjvf archive.tar.bz2 files/
 
 # 提取bzip2压缩的tar文件
