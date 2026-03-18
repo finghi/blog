@@ -6,15 +6,21 @@ export default sidebar({
     {
       text: "文档",
       icon: "book",
-      prefix: "docs/",
+      prefix: "docs/",      
+      collapsible: true,      
       children: "structure",
-      collapsible: true,
-      
     },
     {
       text: "博客",
       icon: "hippo",
       prefix: "posts/",
+      collapsible: true,
+      children: "structure",
+    },
+    {
+      text: "华为学习",
+      icon: "hippo",
+      prefix: "huawei/",
       collapsible: true,
       children: "structure",
     },
